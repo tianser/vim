@@ -1,0 +1,1 @@
+/root/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/BoostParts/CMakeFiles/BoostParts.dir
