@@ -87,10 +87,10 @@ let g:tagbar_type_go = {
 \ }
 
 "设置tagbar使用的ctags的插件，必须要设置正确
-"let g:tagbar_ctags_bin='/usr/bin/ctags'
+let g:tagbar_ctags_bin='/usr/bin/ctags'
 
-"设置tagbar的窗口显示的位置，为左边
-let g:tagbar_left = 1
+"设置tagbar的窗口显示的位置，1:左边 0: 右边
+let g:tagbar_left = 0
 "设置tagbar的窗口宽度
 "let g:tagbar_width=25
 let g:tagbar_width=35
@@ -107,8 +107,21 @@ let g:ctrlp_map = '<c-f>'
 "nerdtree setting start 
 "打开vim，自动打开NERDTree
 autocmd VimEnter *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go NERDTree
-let NERDTreeWinPos='right'
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") &&b:NERDTreeType == "primary")  | qa | endif
+"打开vim,自动打开NERDTree并执行ctrl+w
+autocmd VimEnter * wincmd w
+"let NERDTreeWinPos='right'
+let NERDTreeWinPos='left'
+"自动忽略一下文件的显示
+"let NERDTreeIgnore=['\.pyc', '\~$', '\.swp']
+"显示行号
+let NERDTreeShowLineNumbers=1
+"是否显示隐藏文件
+let NERDTreeShowHidden=1
+"设置宽度
+let NERDTreeWinSize=30
+"关闭vim时，如果打开的文件除了NERDTree没有其他文件时，它自动关闭; ps：暂不生效
+autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary")| q! | endif
+"nerdtree setting end 
 
 "key mapped 
 "normal模式下映射
@@ -122,6 +135,4 @@ nmap <C-n> :set nu!<CR>
 map <c-w> <c-w><c-w>
 
 "map! Insert Only + command line 模式
-
-
 
