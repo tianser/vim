@@ -3,6 +3,8 @@ set tabstop=4
 set shiftwidth=4              "换行插入4个字符宽
 set expandtab 				  "将Tab键转换为空格
 
+scriptencoding utf-8
+set encoding=utf-8            "设置编码格式
 
 set hlsearch                  " 搜索逐字符高亮
 set syntax=on                 " 语法高亮 
@@ -109,6 +111,10 @@ let g:ctrlp_map = '<c-f>'
 autocmd VimEnter *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go NERDTree
 "打开vim,自动打开NERDTree并执行ctrl+w
 autocmd VimEnter * wincmd w
+"目录箭头 显示箭头:1  传统+-|号: 0
+"let NERDTreeDirArrows=1
+let NERDTreeDirArrowExpandable = "+"
+let NERDTreeDirArrowCollapsible = "▼"
 "let NERDTreeWinPos='right'
 let NERDTreeWinPos='left'
 "自动忽略一下文件的显示
