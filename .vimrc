@@ -112,11 +112,11 @@ autocmd VimEnter * wincmd w
 "let NERDTreeWinPos='right'
 let NERDTreeWinPos='left'
 "自动忽略一下文件的显示
-"let NERDTreeIgnore=['\.pyc', '\~$', '\.swp']
+let NERDTreeIgnore=['\.pyc', '\~$', '\.swp']
 "显示行号
 let NERDTreeShowLineNumbers=1
 "是否显示隐藏文件
-let NERDTreeShowHidden=1
+let NERDTreeShowHidden=0
 "设置宽度
 let NERDTreeWinSize=30
 "关闭vim时，如果打开的文件除了NERDTree没有其他文件时，它自动关闭; ps：暂不生效
@@ -125,8 +125,8 @@ autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeT
 
 "key mapped 
 "normal模式下映射
-nmap <F8> :TagbarToggle<CR>
-nmap <F9> :NERDTreeToggle<CR> 
+nmap <F8> :NERDTreeToggle<CR> 
+nmap <F9> :TagbarToggle<CR>
 nmap <F10> :set paste<CR>
 nmap <C-n> :set nu!<CR> 
 "nmap <C-p> :set paste!<cr> 
