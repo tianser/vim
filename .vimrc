@@ -3,6 +3,7 @@ set tabstop=4
 set shiftwidth=4              "换行插入4个字符宽
 set expandtab 				  "将Tab键转换为空格
 
+set mouse=c
 scriptencoding utf-8
 set encoding=utf-8            "设置编码格式
 
@@ -26,15 +27,19 @@ Plugin 'scrooloose/nerdtree'    "展示目录及文件
 Plugin 'tmhedberg/matchit'      "使用%在两个对应的字符间跳转
 Plugin 'Raimondi/delimitMate'   "括号，等补全
 Plugin 'kien/ctrlp.vim'         "快速查找文件
+Plugin 'mileszs/ack.vim'        "全局搜索代码
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 "colorscheme molokai
+"ag setting
+let g:ackprg='ag --ignore *tags --nogroup --nocolor --column'
+map <c-f> :Ack<space>
 
 "YouCompleteMe YCM setting 
 let g:ycm_cache_omnifunc=0         "关闭缓存
-let g:ycm_collect_identifiers_from_tags_files=1 "开启 YCM 基于标签引擎
+let g:ycm_collect_identifiers_from_tags_files=0 "开启 YCM 基于标签引擎
 let g:ycm_global_ycm_extra_conf = '/root/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp/ycm/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0  "打开vim时不再询问是否加载ycm_extra_conf.py配置  
 let g:ycm_error_symbol = '>>'   "语法检测,不太准
@@ -46,7 +51,8 @@ let g:ycm_key_invoke_completion = '<C-Space>'
 let g:ycm_complete_in_comments = 1  "补全注释
 let g:ycm_complete_in_strings = 1   "字符串输入中也补全
 let g:ycm_server_log_level = 'info' "设置ycm log等级
-"let g:ycm_server_log_level = 'info' "设置ycm log等级
+"最小自动触发补全的字符大小设置为 3 
+let g:ycm_min_num_of_chars_for_completion = 1 
 "let g:ycm_collect_identifiers_from_tags_files = 1 "会导致一直更新标签，python2 占用内存80%以上
 "进入vim, 执行:YcmDebugInfo
 "重启YCM， 执行: YcmRestartServer 
@@ -103,7 +109,10 @@ let g:tagbar_width=35
 "tagbar setting end 
 
 "ctrlp setting start 
-let g:ctrlp_map = '<c-f>'
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+"设置过滤不进行查找的后缀名 
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|svn|pyc|pyo|o|a)$' 
 "ctrlp setting start 
 
 "nerdtree setting start 
@@ -118,7 +127,7 @@ let NERDTreeDirArrowCollapsible = "▼"
 "let NERDTreeWinPos='right'
 let NERDTreeWinPos='left'
 "自动忽略一下文件的显示
-let NERDTreeIgnore=['\.pyc', '\~$', '\.swp']
+let NERDTreeIgnore=['\.pyc', '\.pyo', '\~$', '\.swp', 'tags', 'cscope*']
 "显示行号
 let NERDTreeShowLineNumbers=1
 "是否显示隐藏文件
@@ -129,16 +138,48 @@ let NERDTreeWinSize=30
 autocmd bufenter * if(winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary")| q! | endif
 "nerdtree setting end 
 
+if has("cscope") && filereadable("/usr/bin/cscope")
+   set csprg=/usr/bin/cscope
+   set csto=0
+   set cst 
+   set nocsverb
+   "set dir=$PWD/cscope.out
+   " add any database in current directory
+   "if filereadable($dir)
+   "   cs add $dir 
+   "endif
+   cs add $PWD/cscope.out 
+   set ttimeoutlen=20
+endif
+
 "key mapped 
 "normal模式下映射
 nmap <F8> :NERDTreeToggle<CR> 
 nmap <F9> :TagbarToggle<CR>
 nmap <F10> :set paste<CR>
 nmap <C-n> :set nu!<CR> 
+    
+"查找本 C 符号(可以跳过注释)
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
+"查找本定义
+nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>  
+"查找本函数调用的函数
+nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+"查找调用本函数的函数
+nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>  
+"查找本字符串
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>  
+"查找本 egrep 模式
+nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>  
+"查找本文件
+nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>  
+"查找包含本文件的文件
+nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 "nmap <C-p> :set paste!<cr> 
 
 "Normal模式 + Visual模式 + Operator pending 模式
 map <c-w> <c-w><c-w>
 
 "map! Insert Only + command line 模式
-
