@@ -3,7 +3,6 @@ set tabstop=4
 set shiftwidth=4              "换行插入4个字符宽
 set expandtab 				  "将Tab键转换为空格
 
-set mouse=c
 scriptencoding utf-8
 set encoding=utf-8            "设置编码格式
 
