@@ -31,7 +31,9 @@ Plugin 'mileszs/ack.vim'        "全局搜索代码
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-"colorscheme molokai
+"set color
+colorscheme elflord 
+
 "ag setting
 let g:ackprg='ag --ignore *tags --nogroup --nocolor --column'
 map <c-f> :Ack<space>
