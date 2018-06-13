@@ -27,6 +27,7 @@ Plugin 'tmhedberg/matchit'      "使用%在两个对应的字符间跳转
 Plugin 'Raimondi/delimitMate'   "括号，等补全
 Plugin 'kien/ctrlp.vim'         "快速查找文件
 Plugin 'mileszs/ack.vim'        "全局搜索代码
+Plugin 'tomlion/vim-solidity'   "solidity语法
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
