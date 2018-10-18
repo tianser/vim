@@ -35,6 +35,8 @@ filetype plugin indent on    " required
 "set color
 colorscheme elflord 
 
+let g:go_version_warning = 0
+"let g:go_fmt_options = 0
 "ag setting
 let g:ackprg='ag --ignore *tags --nogroup --nocolor --column'
 map <c-f> :Ack<space>
@@ -54,7 +56,7 @@ let g:ycm_complete_in_comments = 1  "补全注释
 let g:ycm_complete_in_strings = 1   "字符串输入中也补全
 let g:ycm_server_log_level = 'info' "设置ycm log等级
 "最小自动触发补全的字符大小设置为 3 
-let g:ycm_min_num_of_chars_for_completion = 1 
+let g:ycm_min_num_of_chars_for_completion = 3 
 "let g:ycm_collect_identifiers_from_tags_files = 1 "会导致一直更新标签，python2 占用内存80%以上
 "进入vim, 执行:YcmDebugInfo
 "重启YCM， 执行: YcmRestartServer 
@@ -119,7 +121,7 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|svn|pyc|pyo|o|a)$'
 
 "nerdtree setting start 
 "打开vim，自动打开NERDTree
-autocmd VimEnter *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go NERDTree
+autocmd VimEnter *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go, *.md NERDTree
 "打开vim,自动打开NERDTree并执行ctrl+w
 autocmd VimEnter * wincmd w
 "目录箭头 显示箭头:1  传统+-|号: 0
@@ -129,7 +131,7 @@ let NERDTreeDirArrowCollapsible = "▼"
 "let NERDTreeWinPos='right'
 let NERDTreeWinPos='left'
 "自动忽略一下文件的显示
-let NERDTreeIgnore=['\.pyc', '\.pyo', '\~$', '\.swp', 'tags', 'cscope*']
+let NERDTreeIgnore=['\.pyc', '\.pyo', '\~$', '\.swp', 'tags', 'cscope*', '\.o', '\.la']
 "显示行号
 let NERDTreeShowLineNumbers=1
 "是否显示隐藏文件
@@ -160,6 +162,7 @@ nmap <F8> :NERDTreeToggle<CR>
 nmap <F9> :TagbarToggle<CR>
 nmap <F10> :set paste<CR>
 nmap <C-n> :set nu!<CR> 
+nmap <C-m> :GoImplements<CR> 
     
 "查找本 C 符号(可以跳过注释)
 nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
