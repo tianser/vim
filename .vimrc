@@ -121,7 +121,7 @@ let g:ctrlp_custom_ignore = '\v[\/]\.(git|svn|pyc|pyo|o|a)$'
 
 "nerdtree setting start 
 "打开vim，自动打开NERDTree
-autocmd VimEnter *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go, *.md NERDTree
+autocmd VimEnter *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go,*.md NERDTree
 "打开vim,自动打开NERDTree并执行ctrl+w
 autocmd VimEnter * wincmd w
 "目录箭头 显示箭头:1  传统+-|号: 0
