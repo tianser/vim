@@ -6,11 +6,13 @@ set expandtab 				  "将Tab键转换为空格
 scriptencoding utf-8
 set encoding=utf-8            "设置编码格式
 
+set foldmethod=manual          "根据手动进行折叠
 set hlsearch                  " 搜索逐字符高亮
 set syntax=on                 " 语法高亮 
 set nocompatible              " be iMproved, required
 filetype off                  " required
 "set noeb                      " 设置输入错误提示声音
+
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -27,18 +29,15 @@ Plugin 'tmhedberg/matchit'      "使用%在两个对应的字符间跳转
 Plugin 'Raimondi/delimitMate'   "括号，等补全
 Plugin 'kien/ctrlp.vim'         "快速查找文件
 Plugin 'mileszs/ack.vim'        "全局搜索代码
-Plugin 'tomlion/vim-solidity'   "solidity语法
+Plugin 'tomlion/vim-solidity'   "solidity
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-"set color
 colorscheme elflord 
 
-let g:go_version_warning = 0
-"let g:go_fmt_options = 0
 "ag setting
-let g:ackprg='ag --ignore *tags --nogroup --nocolor --column'
+let g:ackprg = 'ag --nogroup --nocolor --column'
 map <c-f> :Ack<space>
 
 "YouCompleteMe YCM setting 
@@ -55,8 +54,8 @@ let g:ycm_key_invoke_completion = '<C-Space>'
 let g:ycm_complete_in_comments = 1  "补全注释
 let g:ycm_complete_in_strings = 1   "字符串输入中也补全
 let g:ycm_server_log_level = 'info' "设置ycm log等级
-"最小自动触发补全的字符大小设置为 3 
-let g:ycm_min_num_of_chars_for_completion = 3 
+"最小自动触发补全的字符大小设置为 2 
+let g:ycm_min_num_of_chars_for_completion = 2 
 "let g:ycm_collect_identifiers_from_tags_files = 1 "会导致一直更新标签，python2 占用内存80%以上
 "进入vim, 执行:YcmDebugInfo
 "重启YCM， 执行: YcmRestartServer 
@@ -109,19 +108,19 @@ let g:tagbar_width=35
 "自动打开tagbar
 "let g:tagbar_autoshowtag = 1
 "自动打开指定后缀的文件tagbar
-"autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go call tagbar#autoopen()
+"autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go,*.js,*.sol call tagbar#autoopen()
 "tagbar setting end 
 
 "ctrlp setting start 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 "设置过滤不进行查找的后缀名 
-let g:ctrlp_custom_ignore = '\v[\/]\.(git|svn|pyc|pyo|o|a)$' 
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|svn|pyc|o|a)$' 
 "ctrlp setting start 
 
 "nerdtree setting start 
 "打开vim，自动打开NERDTree
-autocmd VimEnter *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go,*.md NERDTree
+autocmd VimEnter *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx,*.py,*.go,*.js,*.sol NERDTree
 "打开vim,自动打开NERDTree并执行ctrl+w
 autocmd VimEnter * wincmd w
 "目录箭头 显示箭头:1  传统+-|号: 0
@@ -131,7 +130,7 @@ let NERDTreeDirArrowCollapsible = "▼"
 "let NERDTreeWinPos='right'
 let NERDTreeWinPos='left'
 "自动忽略一下文件的显示
-let NERDTreeIgnore=['\.pyc', '\.pyo', '\~$', '\.swp', 'tags', 'cscope*', '\.o', '\.la']
+let NERDTreeIgnore=['\.pyc', '\~$', '\.swp', 'tags', 'cscope*']
 "显示行号
 let NERDTreeShowLineNumbers=1
 "是否显示隐藏文件
@@ -162,7 +161,6 @@ nmap <F8> :NERDTreeToggle<CR>
 nmap <F9> :TagbarToggle<CR>
 nmap <F10> :set paste<CR>
 nmap <C-n> :set nu!<CR> 
-nmap <C-m> :GoImplements<CR> 
     
 "查找本 C 符号(可以跳过注释)
 nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
@@ -188,3 +186,11 @@ nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <c-w> <c-w><c-w>
 
 "map! Insert Only + command line 模式
+
+
+if has("autocmd") 
+autocmd BufReadPost *
+			\ if line("'\"")>0&&line("'\"")<=line("$") |
+			\	exe "normal g'\"" |
+			\ endif
+endif
