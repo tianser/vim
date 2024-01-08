@@ -14,3 +14,8 @@ ctags -R
 yum install -y pcre-devel
 yum install xz-devel
 yum localinstall   the_silver_searcher-0.33.0-1.el7.x86_64.rpm -y
+
+
+# 执行安装命令
+# 在vim 中执行:GoInstallBinaries
+
