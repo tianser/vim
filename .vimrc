@@ -30,6 +30,7 @@ Plugin 'Raimondi/delimitMate'   "括号，等补全
 Plugin 'kien/ctrlp.vim'         "快速查找文件
 Plugin 'mileszs/ack.vim'        "全局搜索代码
 Plugin 'tomlion/vim-solidity'   "solidity
+Plugin 'jstemmer/gotags'        "gotags
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -69,6 +70,7 @@ let g:UltiSnipsJumpBackwardTrigger = "<c-z>"
 
 "tagbar setting start
 let g:tagbar_ctags_bin="/usr/bin/ctags"
+let g:tagbar_gotags_bin="/usr/bin/gotags"
 let g:tagbar_type_go = {
     \ 'ctagstype' : 'go',
     \ 'kinds'     : [
